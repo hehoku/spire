@@ -8,9 +8,12 @@
     "start": "next start",
     "ts-compile-check": "tsc -p tsconfig.json"
   },
+  "pre-commit": [
+    "ts-compile-check"
+  ],
   "husky": {
     "hooks": {
-      "pre-commit": "npm run ts-compile-check"
+      "pre-commit": "yarn ts-compile-check"
     }
   },
   "dependencies": {
