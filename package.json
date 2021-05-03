@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "precommit": "tsc"
+    "ts-compile-check": "tsc -p tsconfig.json"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run ts-compile-check"
+    }
   },
   "dependencies": {
     "next": "10.x",
