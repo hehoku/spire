@@ -9,8 +9,19 @@ const LinkShortener = () => {
     setLongUrl(e.target.value)
   }
 
-  const handleShort = () => {
-    fetchApi()
+  const handleShort = async () => {
+    const isAvailable = await checkUrlIsAvailable(longUrl)
+    if (isAvailable) {
+      fetchApi()
+    } else {
+      setShortUrl('您输入的 url 不合规')
+    }
+  }
+
+  const checkUrlIsAvailable = async (url: string): Promise<Boolean> => {
+    const response = await fetch(url)
+    console.log('response code: ', response.status)
+    return response.status !== 404
   }
 
   const fetchApi = () => {
@@ -42,7 +53,9 @@ const LinkShortener = () => {
         <input type='text' value={longUrl} onChange={handleInputChange} />
         <button onClick={handleShort}>生成</button>
       </div>
-      <a href={shortUrl}>{shortUrl}</a>
+      <a href={shortUrl === '您输入的 url 不合规' ? '' : shortUrl}>
+        {shortUrl}
+      </a>
     </div>
   )
 }
